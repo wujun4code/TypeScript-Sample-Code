@@ -4,6 +4,7 @@
 import * as chai from 'chai';
 import * as AV from 'leancloud-storage';
 import * as utils from "../Common/utils";
+import * as driver from '../init';
 
 let randomUsername = '';
 let user:AV.User;
@@ -11,6 +12,7 @@ describe('User', function () {
 
   before(function () {
     // mock data for test cases
+    driver.initDriver();
     randomUsername = utils.randomString(8);
   });
   // 实例方法使用 # 分隔类和方法
@@ -22,7 +24,8 @@ describe('User', function () {
       user.setPassword('cat!@#123');// 设置密码
       user.setEmail(randomUsername + '@leancloud.cn');// 设置邮箱
 
-      user.signUp<AV.User>().then((loginedUser) => {
+      user.signUp<AV.User>().then(loginedUser => {
+        console.log(loginedUser);
         chai.assert.isNotNull(loginedUser.id);
         done();
       }, (error => {

@@ -20,12 +20,6 @@ describe('Role#queryRole', function () {
     // 在 before 函数里面执行一些欲置脚本
     // 例如初始化 LeanCloud SDK
     before(function () {
-        this.timeout(5000);
-        AV.init({
-            appId: 'WI5a89CtPIOrWpvIwzNfOg9R-MdYXbMMI',
-            appKey: 'RUoMOSD8RNlpd0MIIiSDi7BU',
-            region: 'us'
-        });
         // runs before all tests in this block
         let randomRolename = utils.randomString(8);
         testRole = new AV.Role(randomRolename);
@@ -39,10 +33,9 @@ describe('Role#queryRole', function () {
     // 实例方法使用 # 分隔类和方法
     it('AVRole#queryRole', function (done) {
         try {
-            this.timeout(5000);
             // 示例代码-Start
             // 构建 AV.Role 的查询
-            let roleQuery = new AV.Query(AV.Role);
+            let roleQuery = new AV.Query('_Role');
             roleQuery.get<AV.Role>(roleObjectId).then(role => {
                 let relation = role.getUsers();// 获取关系
                 let query = relation.query();// 获取查询
@@ -69,6 +62,5 @@ describe('Role#queryRole', function () {
     // 在 after 里面可以执行一些清理脚本，清理本次执行所产生的脏数据
     after(function () {
         // runs after all tests in this block
-        testRole.destroy();
     });
 });
